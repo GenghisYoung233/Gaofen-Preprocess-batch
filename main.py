@@ -395,7 +395,7 @@ if __name__ == "__main__":
                         type=str, default=join(appPath, 'data', 'GMTED2km.tif'))
     parser.add_argument('--otbPath', dest='otbPath',
                         help='path for Orfeo Toolbox',
-                        type=str, default=glob(join(appPath, 'OTB-*-Win64'))[0])
+                        type=str)
     parser.add_argument('--level', dest='level',
                         help='Processing level, options: DN, Surface_Reflectance',
                         type=str, default='DN')                    
@@ -418,7 +418,16 @@ if __name__ == "__main__":
         for f in args.files:
             assert f.isascii(), "镶嵌前，请确保输入数据的路径不包含中文！"
 
-    otbPath = args.otbPath
+    
+    if args.otbPath:
+        otbPath = args.otbPath
+    elif glob(join(appPath, 'OTB-*-Win64')):
+        otbPath = glob(join(appPath, 'OTB-*-Win64'))[0]
+    else:
+        logger.error(f"OTB is not found !")
+        assert False,f"OTB not found in:{appPath},\n please download from https://www.orfeo-toolbox.org"
+
+
     os.environ['GDAL_DATA'] = join(otbPath, r"share\data")
     os.environ['PROJ_LIB'] = join(otbPath, r"share\proj")
     os.environ['GDAL_DRIVER_PATH'] = 'disable'

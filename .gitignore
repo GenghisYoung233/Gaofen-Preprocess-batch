@@ -1,0 +1,27 @@
+# nodejs
+node_modules/
+# package-lock.json
+
+# electron-builder
+dist/
+
+# pyinstaller
+build/
+
+# nuitka
+main.build/
+main.dist/
+main.onefile-build
+main.exe
+main.spec
+
+# venv
+venv/
+
+# vscode
+.vscode/
+
+# jetbrains
+.idea/
+
+build.bat
